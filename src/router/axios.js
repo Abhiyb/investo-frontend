@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: import.meta.env.VITE_BACKEND_SERVER_URL, // ✅ dynamic backend URL
   headers: {
     'Content-Type': 'application/json'
   }
@@ -9,10 +9,9 @@ const axiosInstance = axios.create({
 
 // Attach token to every request
 axiosInstance.interceptors.request.use(config => {
-  console.log('Request made with ', 'http://localhost:8080')
+  console.log('Request made with', import.meta.env.VITE_BACKEND_SERVER_URL)
   const token = localStorage.getItem('token')
   if (token) {
-
     config.headers.Authorization = `Bearer ${token}`
   }
   return config
